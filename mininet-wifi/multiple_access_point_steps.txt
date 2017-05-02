@@ -1,0 +1,28 @@
+--------Multiple Access Points-----------------
+
+-> Create topology: 
+sudo mn --wifi --topo linear,3
+
+-> To see which ap is connected to sta1: 
+sta1 iw dev sta1-wlan0 link
+
+-> Disconnect sta1 and connect to apt2:
+sta1 iw dev sta1-wlan0 disconnect
+sta1 iw dev sta1-wlan0 connect ssid_ap2
+
+-> ping sta1 from sta3:
+
+-> wireshark
+
+-> See flow rules:
+dpctl dump-flows
+
+-> Connect back to apt1:
+sta1 iw dev sta1-wlan0 disconnect
+sta1 iw dev sta1-wlan0 connect ssid_ap1
+
+-> now see the rules:
+dpctl dump-flows
+
+-> Delete all flows:
+dpctl del-flows

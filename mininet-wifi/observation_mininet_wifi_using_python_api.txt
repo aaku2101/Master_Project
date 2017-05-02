@@ -1,0 +1,43 @@
+--------Using Python API and scripts-------------
+
+*** Basic Methods *** 
+-> To add a new station:
+net.addStation( 'sta1' )
+
+-> To add a new Base station:
+net.addBaseStation( 'ap1',  ssid='new_ssid' )
+
+-> Wireless association between station and access point:
+net.addLink( ap1, sta1 )
+
+*** Advanced Methods ***
+-> Add a station and specify the wireless encryption method, the station MAC address, IP address, and position in virtual space:
+net.addStation( 'sta1', passwd='123456789a', encrypt='wpa2', mac='00:00:00:00:00:02', ip='10.0.0.2/8', position='50,30,0' ) 
+
+-> Add an access point and specify the wireless encryption method, SSID, wireless mode, channel, position, and radio range:
+net.addBaseStation( 'ap1', passwd='123456789a', encrypt='wpa2', ssid= 'ap1-ssid', mode= 'g', channel= '1', position='30,30,0', range=30 )
+
+-> Add a link and specifiy link properties of maximum bandwidth, error rate, and delay:
+net.addLink( ap1, sta1, bw='11Mbps', loss='0.1%', delay='15ms' )
+
+
+******************* Activate Association Control ****************
+
+To activate association control in a static network, you may use the associationControl method, which makes Mininet-WiFi automatically choose which access point a base station will connect to based on the range between stations and access points. For example, use the following method to use the strongest signal first when determining connections between station and access points:
+
+net.associationControl( 'ssf' )
+
+
+******************* Changing network during Runtime ***************
+
+Mininet-WiFi provides Python functions that can be used during runtime to make changes to node positions and associations. These functions are useful when we have a static setup and want to make arbitrary changes on demand. This makes it possible to do testing or demonstrations with carefully controlled scenarios.
+
+To change the access point to which a station is associated (provided the access point is within range):
+
+sta1.moveAssociationTo('sta1-wlan0', 'ap1') 
+
+To move a station or access point in space to another coordinate position:
+
+sta1.moveStationTo('40,20,40')
+
+

@@ -1,0 +1,26 @@
+*For the case where there is one access point:
+
+1. we created the topology with one access point and one station.
+2. after thaat we tried to ping from sta1 sta2
+3. we noticed that there was no communication from the access point to the controller
+4. since there was no flow established between the controller to the access point, we also don't see any rules in the access point by using the command dump.
+5. the access point just worked as a hub...why?
+
+--> The answer is in this simple scenario, the access point has only one interface, ap1-wlan0. By default, stations associated with an access point connect in infrastructure mode so wireless traffic between stations must pass through the access point.
+
+*For the case where there are multiple access points:
+
+1. we created a linear topology of 3 access points which are connected to each other and each access point has one base station.
+2. Each base station is connected with the access point with a radio interface.
+
+Scenario 1: Station mobility (manual)
+
+- To change sta1's association from ap1 to ap2:
+	sta1 iw dev sta1-wlan0 disconnect
+	sta1 iw dev sta1-wlan0 connect ssid_ap2
+
+Scenario 2: How mininet controller handles this
+
+- for scenario 1, we will try to ping from sta3 to sta1. Here note that sta1 and sta2 are connected to apt2 and sta3 is connected to apt3.
+- When we saw the results in the wireshark and using dpctl dump-flows, there were flows established on apt2 and apt3.
+
